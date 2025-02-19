@@ -1,0 +1,10 @@
+#sign-in-page {
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  background-color: #9ebaf5;
+}
