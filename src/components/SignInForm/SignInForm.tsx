@@ -7,10 +7,7 @@ import { User } from "../../models/User";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 
 const SignInForm: React.FC = () => {
-  const [formData, setFormData] = useState<{
-    email: string;
-    password: string;
-  }>({
+  const [formData, setFormData] = useState<User>({
     email: "",
     password: "",
   });

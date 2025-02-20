@@ -2,14 +2,14 @@ import { apiFetch } from "../utils/apiFetch";
 
 const API_URL = "http://localhost:3000/users";
 
-export const createUser = async (email: string, password: string) => {
+export const createUser = async (username: string, email: string, password: string) => {
   try {
     const response = await fetch(API_URL, {
       method: "POST",
       headers: {
         "Content-Type": "aplication/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ username, email, password }),
     });
 
     if (!response.ok) {
