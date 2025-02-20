@@ -1,33 +1,12 @@
-
-
 form {
+  width: 100%;;
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-label {
-  margin-top: 10px;
-  font-weight: bold;
-  font-size: large;
 }
 
 a {
   font-size: small;
 }
 
-button {
-  padding: 10px;
-  background-color: #435898;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 18px;
-}
 
-button:hover {
-    background-color: #6d8cd4;
-    color: #435898;
-    cursor: pointer;
-}
