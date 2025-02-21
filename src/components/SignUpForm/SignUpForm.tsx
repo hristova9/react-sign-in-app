@@ -4,21 +4,23 @@ import Input from "../Input/Input";
 import { createUser, getAllUsers } from "../../services/userService";
 import "./SignUpForm.css";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
-import { RegisteredUser } from "../../models/RegisteredUser";
+import {
+  arePasswordsMatching,
+  isValidEmail,
+  passwordValidation,
+} from "../../utils/validation";
+import { handleError } from "../../utils/errorHandler";
+import { FormDataSignUp } from "../../models/FormData";
+import { User } from "../../models/User";
 
 const SignUpForm: React.FC = () => {
-  const [formData, setFormData] = useState<{
-    username: string;
-    email: string;
-    password: string;
-    repassword: string;
-  }>({
+  const [formData, setFormData] = useState<FormDataSignUp>({
     username: "",
     email: "",
     password: "",
     repassword: "",
   });
-  const [users, setUsers] = useState<RegisteredUser[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
@@ -27,13 +29,7 @@ const SignUpForm: React.FC = () => {
         const usersData = await getAllUsers();
         setUsers(usersData);
       } catch (error) {
-        if (error instanceof Error) {
-          setError(`Failed to get users!`);
-          throw new Error(error.message);
-        } else {
-          setError(`Failed to get users!`);
-          throw new Error("Error occured!");
-        }
+        handleError(error, setError);
       }
     };
     fetchUsers();
@@ -42,49 +38,35 @@ const SignUpForm: React.FC = () => {
   const handleSubmit = async (ev: FormEvent<HTMLElement>) => {
     ev.preventDefault();
     const { username, email, password, repassword } = formData;
+    const trimmedUsername = username.trim();
+    const trimmedEmail = email.trim();
 
-    if (!username || !email.trim() || !password || !repassword) {
+    if (!trimmedUsername || !trimmedEmail || !password || !repassword) {
       setError("All fields are required!");
       return;
     }
 
-    if (password.length < 8) {
-      setError("Password should be at least 8 characters!");
-      return;
-    }
-    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,20}$/;
-
-    console.log(emailRegex.test(email));
-    console.log(email);
-
-    if (!emailRegex.test(email.trim())) {
-      console.log("email");
-
+    if (!isValidEmail(trimmedEmail)) {
       setError("Email is not valid!");
       return;
     }
-
-    if (password !== repassword) {
+    if (!passwordValidation(password)) {
+      setError("Password should be at least 8 characters!");
+      return;
+    }
+    if (!arePasswordsMatching(password, repassword)) {
       setError("Passwords do not match!");
       return;
     }
 
-    const isRegistered = users.find((u) => u.email === email.trim());
+    const isRegistered = users.find((u) => u.email === trimmedEmail);
 
     if (!isRegistered) {
       try {
-        await createUser(
-          formData.username,
-          formData.email.trim(),
-          formData.password
-        );
+        await createUser(trimmedUsername, trimmedEmail, password);
         setError("");
       } catch (error) {
-        if (error instanceof Error) {
-          throw new Error(error.message);
-        } else {
-          throw new Error("Error occured!");
-        }
+        handleError(error, setError);
       }
       setFormData({ username: "", email: "", password: "", repassword: "" });
     } else {

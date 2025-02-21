@@ -17,7 +17,7 @@ const Input: React.FC<InputProps> = ({
 }) => {
   return (
     <>
-      <label>{label}</label>
+      <label htmlFor={name}>{label}</label>
       <input type={type} name={name} value={value} onChange={onChange} placeholder={placeholder} />
     </>
   );

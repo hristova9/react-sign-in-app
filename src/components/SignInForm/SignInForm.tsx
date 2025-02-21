@@ -5,9 +5,11 @@ import { getAllUsers } from "../../services/userService";
 import "./SignInForm.css";
 import { User } from "../../models/User";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
+import { FormDataSignIn } from "../../models/FormData";
+import { handleError } from "../../utils/errorHandler";
 
 const SignInForm: React.FC = () => {
-  const [formData, setFormData] = useState<User>({
+  const [formData, setFormData] = useState<FormDataSignIn>({
     email: "",
     password: "",
   });
@@ -20,13 +22,7 @@ const SignInForm: React.FC = () => {
         const usersData = await getAllUsers();
         setUsers(usersData);
       } catch (error) {
-        if (error instanceof Error) {
-          setError(`Failed to Sign In!`);
-          throw new Error(error.message);
-        } else {
-          setError(`Failed to Sign In!`);
-          throw new Error("Error occured!");
-        }
+        handleError(error, setError);
       }
     };
     fetchUsers();
@@ -44,8 +40,7 @@ const SignInForm: React.FC = () => {
     const user = users.find((u) => u.email === email);
 
     if (user && user.password === password) {
-      console.log(formData.email);
-      console.log(formData.password);
+      console.log(`Hello, ${user.username}`);
       setError("");
     } else {
       setError("Wrong email or password!");
@@ -79,7 +74,7 @@ const SignInForm: React.FC = () => {
         onChange={handleChange}
         placeholder={"Enter your password..."}
       />
-      <ErrorMessage message={error}/>
+      <ErrorMessage message={error} />
       <a href="/">Sign Up now?</a>
       <Button type={"submit"} title={"Sign In"} />
     </form>
