@@ -1,50 +1,53 @@
-# React + TypeScript + Vite
+# User Authentication App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a simple User Authentication App built using React, where users can sign up, sign in, and view a welcome page after logging in. The app includes various components, pages, services, and utils for managing users and their authentication flow.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Folder Structure](#folder-structure)
+- [Components](#components)
+- [Pages](#pages)
+- [Utils](#utils)
+- [Services](#services)
+- [Models](#models)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Folder Structure
 
-## Expanding the ESLint configuration
+The application is organized into the following folder structure:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+### Components
+- **Button**: A reusable button component.
+- **ErrorMessage**: A component to display error messages.
+- **Input**: A generic input component for text, email, and password fields.
+- **SignUpForm**: The sign-up form component where users can register.
+- **SignInForm**: The sign-in form component where users can log in.
 
-- Configure the top-level `parserOptions` property like this:
+### Pages
+- **Home**: The landing page of the app.
+- **SignUp**: The page where users can create a new account.
+- **SignIn**: The page where users can sign in to their existing account.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+### Models
+- **FormData**: Defines the structure of the form data (username, email, password, repassword) for both sign-up and sign-in forms.
+- **User**: Defines the structure of a user (username, email, password).
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+### Services
+- **userService**: Contains functions like `createUser` to register a new user and `getAllUsers` to fetch all registered users from the backend or mock data. It uses the `apiFetch` utility for making requests to the backend.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+### Utils
+- **apiFetch**: A utility function that performs a `fetch` request and handles errors. It returns the parsed JSON response if the request is successful. This function is used in `getAllUsers` and other API calls.
+- **errorHandler**: Contains functions to handle errors throughout the app.
+- **validation**: Contains helper functions for validating email, password, and matching passwords for sign-up and sign-in forms.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+## How the App Works
+
+1. **Sign Up Flow**:
+   - The user is prompted to enter a username, email, password, and confirm the password in the sign-up form.
+   - The form data is validated to ensure all fields are filled out correctly.
+   - If the user is not already registered, a new user is created.
+   - If the user is successfully registered, they are redirected to the homepage.
+
+2. **Sign In Flow**:
+   - The user is prompted to enter their email and password.
+   - If the entered credentials match a registered user, they are redirected to a welcome page.
+   - If the credentials are incorrect, an error message is displayed.
+

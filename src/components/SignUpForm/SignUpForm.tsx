@@ -120,8 +120,8 @@ const SignUpForm: React.FC = () => {
         placeholder={"Enter your password..."}
       />
       <ErrorMessage message={error} />
-      <a href="/">Sign In now?</a>
       <Button type={"submit"} title={"Sign Up"} />
+      <a href="/">Already have an account? Sign In now!</a>
     </form>
   );
 };

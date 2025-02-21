@@ -1,13 +1,10 @@
 form {
-    width: 100%;;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  a {
-    font-size: small;
-  }
-  
-  
-  
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+a {
+  font-size: small;
+}

@@ -1,13 +1,12 @@
 #sign-up-page {
-    width: 50%;
-    margin-top: 30px;
-    padding: 30px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    border-radius: 10px;
-    background-color: #9ebaf5;
-  }
-  
+  margin-top: 30px;
+  padding: 30px;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 10px;
+  background-color: #9ebaf5;
+}

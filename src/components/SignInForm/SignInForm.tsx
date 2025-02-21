@@ -79,8 +79,8 @@ const SignInForm: React.FC = () => {
         placeholder={"Enter your password..."}
       />
       <ErrorMessage message={error} />
-      <a href="/signup">Sign Up now?</a>
       <Button type={"submit"} title={"Sign In"} />
+      <a href="/signup">Don't have an account? Sign Up now!</a>
     </form>
   );
 };
