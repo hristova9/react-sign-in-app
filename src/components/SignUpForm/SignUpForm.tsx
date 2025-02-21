@@ -12,6 +12,7 @@ import {
 import { handleError } from "../../utils/errorHandler";
 import { FormDataSignUp } from "../../models/FormData";
 import { User } from "../../models/User";
+import { useNavigate } from "react-router-dom";
 
 const SignUpForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataSignUp>({
@@ -22,6 +23,7 @@ const SignUpForm: React.FC = () => {
   });
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -65,6 +67,7 @@ const SignUpForm: React.FC = () => {
       try {
         await createUser(trimmedUsername, trimmedEmail, password);
         setError("");
+        navigate("/");
       } catch (error) {
         handleError(error, setError);
       }

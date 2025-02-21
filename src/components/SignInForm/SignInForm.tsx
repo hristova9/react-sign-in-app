@@ -7,6 +7,7 @@ import { User } from "../../models/User";
 import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import { FormDataSignIn } from "../../models/FormData";
 import { handleError } from "../../utils/errorHandler";
+import { useNavigate } from "react-router-dom";
 
 const SignInForm: React.FC = () => {
   const [formData, setFormData] = useState<FormDataSignIn>({
@@ -15,6 +16,8 @@ const SignInForm: React.FC = () => {
   });
   const [users, setUsers] = useState<User[]>([]);
   const [error, setError] = useState<string>("");
+  const navigate = useNavigate();
+
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -42,6 +45,7 @@ const SignInForm: React.FC = () => {
     if (user && user.password === password) {
       console.log(`Hello, ${user.username}`);
       setError("");
+      navigate("/welcome");
     } else {
       setError("Wrong email or password!");
     }
@@ -75,7 +79,7 @@ const SignInForm: React.FC = () => {
         placeholder={"Enter your password..."}
       />
       <ErrorMessage message={error} />
-      <a href="/">Sign Up now?</a>
+      <a href="/signup">Sign Up now?</a>
       <Button type={"submit"} title={"Sign In"} />
     </form>
   );
